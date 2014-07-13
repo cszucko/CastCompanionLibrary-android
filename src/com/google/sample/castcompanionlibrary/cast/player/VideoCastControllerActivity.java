@@ -20,12 +20,11 @@ import static com.google.sample.castcompanionlibrary.utils.LogUtils.LOGD;
 import static com.google.sample.castcompanionlibrary.utils.LogUtils.LOGE;
 
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.ActionBarActivity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -61,7 +60,7 @@ import com.google.sample.castcompanionlibrary.utils.Utils;
  * In that case, this activity manages starting the {@link IMediaAuthService} and will register a
  * listener to handle the result.
  */
-public class VideoCastControllerActivity extends ActionBarActivity implements IVideoCastController {
+public class VideoCastControllerActivity extends Activity implements IVideoCastController {
 
     private static final String TAG = LogUtils.makeLogTag(VideoCastControllerActivity.class);
     private VideoCastManager mCastManager;
@@ -107,7 +106,7 @@ public class VideoCastControllerActivity extends ActionBarActivity implements IV
             return;
         }
 
-        FragmentManager fm = getSupportFragmentManager();
+        FragmentManager fm = getFragmentManager();
         mediaAuthFragment = (VideoCastControllerFragment) fm.findFragmentByTag("task");
 
         // if fragment is null, it means this is the first time, so create it
@@ -262,12 +261,12 @@ public class VideoCastControllerActivity extends ActionBarActivity implements IV
     }
 
     private void setupActionBar() {
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayUseLogoEnabled(false);
-        getSupportActionBar().setDisplayShowHomeEnabled(false);
-        getSupportActionBar().setDisplayShowTitleEnabled(true);
-        getSupportActionBar().setTitle(" "); // without a title, the "<" won't show
-        getSupportActionBar().setBackgroundDrawable(
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setDisplayUseLogoEnabled(false);
+        getActionBar().setDisplayShowHomeEnabled(false);
+        getActionBar().setDisplayShowTitleEnabled(true);
+        getActionBar().setTitle(" "); // without a title, the "<" won't show
+        getActionBar().setBackgroundDrawable(
                 getResources().getDrawable(R.drawable.actionbar_bg_gradient_light));
     }
 
