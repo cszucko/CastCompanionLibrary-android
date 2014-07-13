@@ -18,7 +18,9 @@ package com.google.sample.castcompanionlibrary.cast.dialog.video;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.MediaRouteControllerDialogFragment;
+
+import com.commonsware.cwac.mediarouter.MediaRouteControllerDialogFragment;
+
 
 /**
  * An extension of MediaRouteControllerDialogFragment which contains a

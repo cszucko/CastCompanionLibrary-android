@@ -29,15 +29,15 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.MediaRouteActionProvider;
-import android.support.v7.app.MediaRouteButton;
-import android.support.v7.app.MediaRouteDialogFactory;
 import android.support.v7.media.MediaRouteSelector;
 import android.support.v7.media.MediaRouter;
 import android.support.v7.media.MediaRouter.RouteInfo;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.commonsware.cwac.mediarouter.MediaRouteActionProvider;
+import com.commonsware.cwac.mediarouter.MediaRouteButton;
+import com.commonsware.cwac.mediarouter.MediaRouteDialogFactory;
 import com.google.android.gms.cast.ApplicationMetadata;
 import com.google.android.gms.cast.Cast;
 import com.google.android.gms.cast.Cast.ApplicationConnectionResult;
@@ -318,9 +318,7 @@ public abstract class BaseCastManager implements DeviceSelectionListener, Connec
 
     /**
      * Adds and wires up the Media Router cast button. It returns a pointer to the Media Router menu
-     * item if the caller needs such reference. It is assumed that the enclosing
-     * {@link android.app.Activity} inherits (directly or indirectly) from
-     * {@link android.support.v7.app.ActionBarActivity}.
+     * item if the caller needs such reference.
      *
      * @param menu
      * @param menuResourceId The resource id of the cast button in the xml menu descriptor file
@@ -329,7 +327,7 @@ public abstract class BaseCastManager implements DeviceSelectionListener, Connec
     public MenuItem addMediaRouterButton(Menu menu, int menuResourceId) {
         MenuItem mediaRouteMenuItem = menu.findItem(menuResourceId);
         MediaRouteActionProvider mediaRouteActionProvider = (MediaRouteActionProvider)
-                MenuItemCompat.getActionProvider(mediaRouteMenuItem);
+                mediaRouteMenuItem.getActionProvider();
         mediaRouteActionProvider.setRouteSelector(mMediaRouteSelector);
         if (null != getMediaRouteDialogFactory()) {
             mediaRouteActionProvider.setDialogFactory(getMediaRouteDialogFactory());

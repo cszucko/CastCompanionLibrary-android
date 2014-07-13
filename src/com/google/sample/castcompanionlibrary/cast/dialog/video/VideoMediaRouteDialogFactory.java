@@ -16,7 +16,7 @@
 
 package com.google.sample.castcompanionlibrary.cast.dialog.video;
 
-import android.support.v7.app.MediaRouteDialogFactory;
+import com.commonsware.cwac.mediarouter.MediaRouteDialogFactory;
 
 public class VideoMediaRouteDialogFactory extends MediaRouteDialogFactory {
 
