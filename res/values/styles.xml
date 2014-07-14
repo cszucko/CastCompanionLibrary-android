@@ -15,6 +15,9 @@
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        <item name="ic_mini_controller_play">@drawable/ic_av_play_light</item>
+        <item name="ic_mini_controller_pause">@drawable/ic_av_pause_light</item>
+        <item name="ic_mini_controller_stop">@drawable/ic_av_stop_light</item>
     </style>
 
     <!-- Dialog -->

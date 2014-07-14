@@ -19,6 +19,7 @@ package com.google.sample.castcompanionlibrary.widgets;
 import static com.google.sample.castcompanionlibrary.utils.LogUtils.LOGE;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
@@ -85,11 +86,22 @@ public class MiniController extends RelativeLayout implements IMiniController {
         super(context, attrs);
         LayoutInflater inflater = LayoutInflater.from(context);
         inflater.inflate(R.layout.mini_controller, this);
-        mPauseDrawable = getResources().getDrawable(R.drawable.ic_mini_controller_pause);
-        mPlayDrawable = getResources().getDrawable(R.drawable.ic_mini_controller_play);
-        mStopDrawable = getResources().getDrawable(R.drawable.ic_mini_controller_stop);
+        mPauseDrawable = getDrawableForAttribute(context, R.attr.ic_mini_controller_pause, R.drawable.ic_av_pause_light);
+        mPlayDrawable = getDrawableForAttribute(context, R.attr.ic_mini_controller_play, R.drawable.ic_av_play_light);
+        mStopDrawable = getDrawableForAttribute(context, R.attr.ic_mini_controller_stop, R.drawable.ic_av_stop_light);
         loadViews();
         setupCallbacks();
+    }
+
+    private Drawable getDrawableForAttribute(Context context, int attributeId, int defaultResourceId) {
+        Drawable drawable;
+        TypedArray a = context.obtainStyledAttributes(new int[] { attributeId });
+        drawable = a.getDrawable(0);
+        a.recycle();
+        if (drawable == null) {
+            drawable = getResources().getDrawable(defaultResourceId);
+        }
+        return drawable;
     }
 
     /**
