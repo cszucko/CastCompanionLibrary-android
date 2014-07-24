@@ -111,12 +111,25 @@ public class VideoCastControllerFragment extends Fragment implements OnVideoCast
         if (null == bundle) {
             return;
         }
-        Bundle extras = bundle.getBundle(EXTRAS);
-        Bundle mediaWrapper = extras.getBundle(VideoCastManager.EXTRA_MEDIA);
 
         // Retain this fragment across configuration changes.
         setRetainInstance(true);
+    }
 
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        Bundle bundle = getArguments();
+        if (null == bundle) {
+            return;
+        }
+        Bundle extras = bundle.getBundle(EXTRAS);
+        Bundle mediaWrapper = extras.getBundle(VideoCastManager.EXTRA_MEDIA);
+
+        // This was being called in onCreate, but it can trigger UI updates.  When the containing
+        // activity is backgrounded, destroyed, and recreated, this fragment's onCreate is called
+        // before the activity's onCreate, so the view hasn't been inflated yet. Defer the code
+        // until we know accessing the view won't cause NullPointerExceptions
         if (extras.getBoolean(VideoCastManager.EXTRA_HAS_AUTH)) {
             mOverallState = OverallState.AUTHORIZING;
             mMediaAuthService = mCastManager.getMediaAuthService();
@@ -138,6 +151,10 @@ public class VideoCastControllerFragment extends Fragment implements OnVideoCast
             MediaInfo info = Utils.toMediaInfo(mediaWrapper);
             int startPoint = extras.getInt(VideoCastManager.EXTRA_START_POINT, 0);
             onReady(info, shouldStartPlayback, startPoint, customData);
+
+            // If we're destroyed and recreated after this point do not restart playback
+            extras.remove(VideoCastManager.EXTRA_SHOULD_START);
+            extras.remove(VideoCastManager.EXTRA_CUSTOM_DATA);
         }
     }
 
